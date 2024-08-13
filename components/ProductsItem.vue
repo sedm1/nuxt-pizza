@@ -5,8 +5,8 @@
             <h4 class="products__item-title">{{ProductsItem.title}}</h4>
             <p class="products__item-descript">{{ ProductsItem.description }}</p>
             <div class="products__item-footer">
-                <div class="products__item-price">от {{ ProductsItem.price }} ₽</div>
-                <button class="products__item-button">Собрать</button>
+                <div class="products__item-price">от <span>{{ ProductsItem.price }} ₽</span></div>
+                <button class="products__item-button">Заказать</button>
             </div>
         </div>
     </div>
@@ -14,7 +14,7 @@
 <script setup>
 const props = defineProps({
     ProductsItem: {
-        type: Array
+        type: Object
     }
 })
 </script>
@@ -40,10 +40,31 @@ const props = defineProps({
         font-size: 14px
         font-weight: 400
         color: #B1B1B1
+        display: -webkit-box
+        -webkit-line-clamp: 3
+        -webkit-box-orient: vertical
+        overflow: hidden
     &-footer 
         margin-top: 13px
         display: flex
         align-items: center
         justify-content: space-between
+    &-price 
+        font-size: 20px
+        font-weight: 400
+        span 
+            font-weight: 700
+            font-size: 20px
+    &-button 
+        padding: 11px 16px
+        border-radius: 15px
+        background: #FFFAF4
+        color: $orange
+        font-size: 16px
+        font-weight: 500
+        transition: .3s
+        &:hover 
+            color: $white 
+            background: $orange
     
 </style>
