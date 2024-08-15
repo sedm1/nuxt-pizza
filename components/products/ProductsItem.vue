@@ -1,12 +1,16 @@
 <template>
     <div class="products__item">
-        <div class="products__item-img"><img :src='"/img/pizza/" + ProductsItem.img' alt="ProductsImg"></div>
+        <div class="products__item-img"><img :src='"/img/pizza/" + ProductsItem.pizzaImg' alt="ProductsImg"></div>
         <div class="products__item-info">
-            <h4 class="products__item-title">{{ProductsItem.title}}</h4>
-            <p class="products__item-descript">{{ ProductsItem.description }}</p>
+            <h4 class="products__item-title">{{ProductsItem.pizzaTitle}}</h4>
+            <p class="products__item-descript">{{ ProductsItem.pizzaDescription }}</p>
             <div class="products__item-footer">
-                <div class="products__item-price">от <span>{{ ProductsItem.price }} ₽</span></div>
-                <button class="products__item-button">Заказать</button>
+                <div class="products__item-price">от <span>{{ ProductsItem.pizzaPrice }} ₽</span></div>
+                <nuxt-link 
+                :to="{name: 'pizza-id', 
+                params: {id: ProductsItem.id}
+                }" 
+                class="products__item-button">Заказать</nuxt-link> 
             </div>
         </div>
     </div>

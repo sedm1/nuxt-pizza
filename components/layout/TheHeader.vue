@@ -9,7 +9,7 @@
             <div class="header__right">
                 <button class="header__right-button">
                     <img src="/img/user-icon.svg" alt="Usericon">
-                    <p>Профиль</p>
+                    <p>Войти</p>
                 </button>
                 <a href="" class="header__right-cart">
                     <p class="header__right-price">520 ₽</p>

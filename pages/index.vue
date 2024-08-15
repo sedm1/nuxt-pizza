@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TheHeader></TheHeader>
+        <LayoutTheHeader></LayoutTheHeader>
         <main>
             <section class="main">
                 <div class="container">
@@ -20,8 +20,8 @@
                                 <CheckBoxItem 
                                 v-for="CheckItem in Pizza.PizzaIngridients"
                                 :key="CheckItem.id"
-                                :title="CheckItem.title"
-                                :slug="CheckItem.slug"
+                                :title="CheckItem.ingridientsTitle"
+                                :slug="CheckItem.ingridientsSlug"
                                 ></CheckBoxItem>
                             </div>
                             <button class="main__block-button">Применить</button>
@@ -46,8 +46,8 @@ onMounted(() => {
 const MaxPizzaPrice = computed(() => {
     let MaxPrice = 0
     Pizza.PizzaState.map((e) => {
-        if (e.price > MaxPrice){
-            MaxPrice = e.price
+        if (e.pizzaPrice > MaxPrice){
+            MaxPrice = e.pizzaPrice
         }
     })
     return MaxPrice
