@@ -29,7 +29,7 @@
                             <div class="main__block-item">
                                 <h4 class="main__item-subtitle">Ингридиенты: </h4>
                                 <CheckBoxItem 
-                                v-for="CheckItem in Pizza.PizzaIngridients"
+                                v-for="CheckItem in filters"
                                 :key="CheckItem.id"
                                 :title="CheckItem.ingridientsTitle"
                                 :slug="CheckItem.ingridientsSlug"
@@ -37,9 +37,23 @@
                                 v-model="ingridients"
                                 @CheckBoxClick="CheckBoxClick"
                                 ></CheckBoxItem>
+                                <button 
+                                class="main__block-button" 
+                                @click="showItems = showItems + 4"
+                                v-if="isShowButtonActive"
+                                >+ Показать еще</button>
+                                <button 
+                                @click="() => {
+                                    showItems = 4
+                                    isShowButtonActive = true
+                                }"
+                                v-else
+                                class="main__block-hide"
+                                >Скрыть все</button>
                             </div>
                         </aside>
-                        <ProductsBlock :products="products"></ProductsBlock>
+                        <ProductsBlock v-if="products.length" :products="products"></ProductsBlock>
+                        <div v-else></div>
                     </div>
                 </div>
             </section>
@@ -70,6 +84,8 @@ const MaxPizzaPrice = computed(() => {
 let ingridients = ref([])
 let minPrice = ref(0)
 let maxPrice = ref(5000)
+let showItems = ref(4)
+let isShowButtonActive = ref(true)
 
 const products = computed(() => {
     return Pizza.PizzaState
@@ -83,6 +99,12 @@ const products = computed(() => {
         return contains(item.pizzaIngridients, ingridients.value)
     })
 })
+const filters = computed(() => {
+    if (showItems.value >= Pizza.PizzaIngridients.length && Pizza.PizzaIngridients.length > 0){
+        isShowButtonActive.value = false
+    }
+    return Pizza.PizzaIngridients.slice(0, showItems.value)
+})
 function CheckBoxClick(data){
     ingridients.value.indexOf(data) == -1 ? ingridients.value.push(data) : ingridients.value.splice(ingridients.value.indexOf(data),1)
 }
@@ -93,6 +115,7 @@ function contains(where, what){
     }
     return true;
 }
+
 </script>
 <style lang="sass" scoped>
 .main
@@ -118,6 +141,15 @@ function contains(where, what){
             align-items: center
             justify-content: space-between
             gap: 15px
+        &-hide 
+            color: $orange
+            background: $white
+            width: 100%
+            padding: 15px 0px
+            border-radius: 18px
+            border: 1px solid $orange
+            font-size: 16px
+            font-weight: 700
         &-button 
             color: $white 
             background: $orange
