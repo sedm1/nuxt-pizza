@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TheHeader></TheHeader>
+        <LayoutTheHeader></LayoutTheHeader>>
         <main>
             <section class="main">
                 <div class="container">
@@ -20,6 +20,7 @@
     </div>
 </template>
 <script setup>
+
 </script>
 <style lang="sass" scoped>
 .main

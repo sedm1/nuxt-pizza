@@ -1,12 +1,18 @@
 <template >
     <div class="input__item">
-        <input type="checkbox" :id="props.slug">
+        <input 
+        type="checkbox" 
+        :id="props.slug" 
+        @click="CheckBoxClick(props.slug)"
+
+        >
         <label :for="props.slug" class="input__item-check"></label>
         <p class="input__item-title">{{ props.title }}</p>
 
     </div>
 </template>
 <script setup>
+const emit= defineEmits(["CheckBoxClick"])
 const props = defineProps({
     title: {
         type: String
@@ -15,6 +21,9 @@ const props = defineProps({
         type: String
     }
 })
+function CheckBoxClick(slug){
+    emit('CheckBoxClick', slug)
+}
 </script>
 <style lang="sass" scoped>
 .input__item

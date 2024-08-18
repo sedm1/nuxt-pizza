@@ -11,8 +11,19 @@
                             <div class="main__block-item">
                                 <h4 class="main__item-subtitle">Цена от и до: </h4>
                                 <div class="main__block-input">
-                                    <input type="number" class="main__item-input" value="0" min="0">
-                                    <input type="number" class="main__item-input" :value="MaxPizzaPrice" :max="MaxPizzaPrice">
+                                    <input 
+                                    type="number" 
+                                    class="main__item-input" 
+                                    placeholder="0" 
+                                    min="0"
+                                    v-model="minPrice"
+                                    >
+                                    <input 
+                                    type="number" 
+                                    class="main__item-input" 
+                                    :placeholder="MaxPizzaPrice" 
+                                    v-model="maxPrice"
+                                    >
                                 </div>
                             </div>
                             <div class="main__block-item">
@@ -22,11 +33,13 @@
                                 :key="CheckItem.id"
                                 :title="CheckItem.ingridientsTitle"
                                 :slug="CheckItem.ingridientsSlug"
+                                :value="CheckItem.ingridientsSlug"
+                                v-model="ingridients"
+                                @CheckBoxClick="CheckBoxClick"
                                 ></CheckBoxItem>
                             </div>
-                            <button class="main__block-button">Применить</button>
                         </aside>
-                        <ProductsBlock :products="Pizza.PizzaState"></ProductsBlock>
+                        <ProductsBlock :products="products"></ProductsBlock>
                     </div>
                 </div>
             </section>
@@ -39,6 +52,7 @@ useHead({
     title: "Главная страница"
 })
 const Pizza = usePizza()
+
 onMounted(() => {
     Pizza.GET_ALL_PIZZA_FROM_DB()
     Pizza.GET_INGRIDIENTS_OF_PIZZA()
@@ -52,6 +66,33 @@ const MaxPizzaPrice = computed(() => {
     })
     return MaxPrice
 })
+
+let ingridients = ref([])
+let minPrice = ref(0)
+let maxPrice = ref(5000)
+
+const products = computed(() => {
+    return Pizza.PizzaState
+    .filter(item => {
+        return item.pizzaPrice >=  minPrice.value
+    })
+    .filter(item =>{
+        return item.pizzaPrice <=  maxPrice.value
+    })
+    .filter(item => {
+        return contains(item.pizzaIngridients, ingridients.value)
+    })
+})
+function CheckBoxClick(data){
+    ingridients.value.indexOf(data) == -1 ? ingridients.value.push(data) : ingridients.value.splice(ingridients.value.indexOf(data),1)
+}
+function contains(where, what){
+    for(var i=0; i<what.length; i++){
+        if(where.indexOf(what[i]) == -1) return false;
+        console.log(what[i], where)
+    }
+    return true;
+}
 </script>
 <style lang="sass" scoped>
 .main

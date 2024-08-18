@@ -7,14 +7,12 @@ export const usePizza = defineStore('Pizza', {
         CurrentPizza: []
     }),
     actions: {
-        GET_ALL_PIZZA_FROM_DB(){
-            //Получаем одновременно ингридиенты и продукцию
-            //Если бы бд проектировал не я, то по-любому бы было бы лучше
-            let productsPromise = new Promise((resolve, reject) => {
+        PromiseToDb(query){
+            return new Promise((resolve, reject) => {
                 try {
                     const config = useRuntimeConfig()
                     const params = new FormData
-                    params.append('query', 'all')
+                    params.append('query', query)
                     const pizza = $fetch(`${config.public.Api}/pizza.php`, {
                         method: 'POST',
                         body: params
@@ -22,26 +20,15 @@ export const usePizza = defineStore('Pizza', {
                     resolve(pizza)
                 }
                 catch(err){
-                    console.log('Ошибка при получении пиццы с БД: ' + err)
+                    console.log('Ошибка при получении с БД: ' + err)
                     reject(err)
                 }
             })
-            let ingridientsPromise = new Promise((resolve, reject) => {
-                try {
-                    const config = useRuntimeConfig()
-                    const params = new FormData
-                    params.append('query', 'ingridients_to_products')
-                    const ingridients = $fetch(`${config.public.Api}/pizza.php`, {
-                        method: 'POST',
-                        body: params
-                    })
-                    resolve(ingridients) 
-                } 
-                catch(err){
-                    console.log('Ошибка при получении ингридиетов')
-                    reject(err)
-                }
-            })
+            
+        },
+        GET_ALL_PIZZA_FROM_DB(){
+            let productsPromise = this.PromiseToDb('all')
+            let ingridientsPromise = this.PromiseToDb('ingridients_to_products')
             Promise.all([productsPromise, ingridientsPromise])
             .then((res) => {
                 let products = res[0].data
@@ -53,10 +40,9 @@ export const usePizza = defineStore('Pizza', {
                 ingridients.forEach(e => {
                     let item = productsMap.get(e.id);
                     if (item) {
-                        item.pizzaIngridients.push([e.ingridientsSlug, e.ingridientsTitle]);
+                        item.pizzaIngridients.push(e.ingridientsSlug);
                     }
                 });
-                
                 this.PizzaState = products
             })
             .catch((err) => {

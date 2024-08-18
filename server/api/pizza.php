@@ -26,7 +26,7 @@ if ($query == 'all'){
     }
 } 
 elseif($query == 'ingridients_to_products'){
-    $sql = 'SELECT pizza.id, ingridients.ingridientsTitle, ingridients.ingridientsSlug
+    $sql = 'SELECT pizza.id, ingridients.ingridientsSlug
     FROM `pizza_ingridients` 
     JOIN `pizza` ON pizza_ingridients.pizzaId = pizza.id
     JOIN `ingridients` ON pizza_ingridients.ingridientsId = ingridients.id';
