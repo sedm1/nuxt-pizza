@@ -28,7 +28,7 @@
                             </div>
                             <div class="main__block-item">
                                 <h4 class="main__item-subtitle">Ингридиенты: </h4>
-                                <CheckBoxItem 
+                                <UxCheckBoxItem 
                                 v-for="CheckItem in filters"
                                 :key="CheckItem.id"
                                 :title="CheckItem.ingridientsTitle"
@@ -36,7 +36,7 @@
                                 :value="CheckItem.ingridientsSlug"
                                 v-model="ingridients"
                                 @CheckBoxClick="CheckBoxClick"
-                                ></CheckBoxItem>
+                                ></UxCheckBoxItem>
                                 <button 
                                 class="main__block-button" 
                                 @click="showItems = showItems + 4"

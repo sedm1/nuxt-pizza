@@ -11,17 +11,20 @@
                     <img src="/img/user-icon.svg" alt="Usericon">
                     <p>Войти</p>
                 </button>
-                <a href="" class="header__right-cart">
-                    <p class="header__right-price">520 ₽</p>
-                    <div class="header__right-line"></div>
+                <button class="header__right-cart" @click="ModalCart.OpenCart()">
+                    
                     <img src="/img/cart-icon.svg" alt="CartIcon" class="header__right-cartIcon">
-                    <p class="header__right-count">0</p>
-                </a>
+                    <p class="header__right-price">{{ Cart.CartPrice }}₽</p>
+                </button>
             </div>
         </div>
     </header>
 </template>
 <script setup>
+import { useCart } from '@/stores/Cart';
+import { useModalCart } from '~/stores/ModalCart';
+const Cart = useCart()
+const ModalCart = useModalCart()
 </script>
 
 <style lang="sass" scoped>
@@ -78,7 +81,7 @@ header
             border-radius: 15px
             color: $orange 
             font-weight: 600
-        &-price, &-line, &-count
-            display: none
+        &-price 
+            margin-left: 5px
         
 </style>

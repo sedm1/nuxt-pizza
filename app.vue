@@ -1,8 +1,19 @@
 <template>
   <div>
     <NuxtPage />
+    <Teleport to="#teleports">
+        <transition name="fade">
+            <CartModalCart v-if="ModalCart.IsCartOpen"></CartModalCart>
+        </transition>
+        
+    </Teleport>
+    
   </div>
 </template>
+<script setup>
+import { useModalCart } from './stores/ModalCart';
+const ModalCart = useModalCart()
+</script>
 <style lang="sass">
 *
     padding: 0
@@ -42,4 +53,11 @@ input
 .section__title
     font-size: 36px
     font-weight: 800
+.fade-enter-active, .fade-leave-active 
+  transition: opacity 0.3s ease
+
+
+.fade-enter-from, .fade-leave-to 
+  opacity: 0
+
 </style>
