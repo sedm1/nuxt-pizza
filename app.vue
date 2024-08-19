@@ -5,7 +5,6 @@
         <transition name="fade">
             <CartModalCart v-if="ModalCart.IsCartOpen"></CartModalCart>
         </transition>
-        
     </Teleport>
     
   </div>
@@ -23,6 +22,9 @@ const ModalCart = useModalCart()
     font-size: 14px
 body
   position: relative
+.body-block
+    max-height: 100vh
+    overflow: hidden
 section
     margin-top: 40px
 img

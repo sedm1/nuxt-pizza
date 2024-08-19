@@ -88,7 +88,9 @@ Pizza.GET_PIZZA_FROM_ID(route.params.id)
 useSeoMeta({
     title: () => Pizza.CurrentPizza.pizzaTitle
 })
-
+onMounted(()=>{
+    document.body.classList.remove('body-block')
+})
 let pizzaSize = ref('Маленькая')
 let doughType = ref('Тонкое')
 

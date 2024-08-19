@@ -85,6 +85,7 @@ const tax = computed(() => {
         width: 100%
         height: 100vh
         background: rgba(0, 0, 0, 0.4)
+        z-index: 3
     &__cart
         max-width: 395px
         width: 100%
